@@ -3,8 +3,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { LogOut, Menu, X } from "lucide-react";
+import { LogOut, Menu, X, Plus, UserPlus, FileText } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Header = () => {
   const isMobile = useIsMobile();
@@ -35,19 +41,42 @@ export const Header = () => {
         </div>
         <div className="flex items-center space-x-2">
           {user && (
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600 hidden md:inline-block">
-                {user.email}
-              </span>
-              <Button variant="ghost" size="sm" onClick={signOut}>
-                <LogOut className="h-4 w-4 mr-2" />
-                <span className="hidden sm:inline">Sign Out</span>
-              </Button>
-            </div>
+            <>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <Plus className="h-4 w-4 mr-1" />
+                    <span>Create New</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="bg-white">
+                  <DropdownMenuItem asChild>
+                    <Link to="/employees/new" className="flex items-center">
+                      <UserPlus className="h-4 w-4 mr-2" />
+                      New Employee
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/invoices/new" className="flex items-center">
+                      <FileText className="h-4 w-4 mr-2" />
+                      New Invoice
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <div className="flex items-center space-x-4">
+                <span className="text-sm text-gray-600 hidden md:inline-block">
+                  {user.email}
+                </span>
+                <Button variant="ghost" size="sm" onClick={signOut}>
+                  <LogOut className="h-4 w-4 mr-2" />
+                  <span className="hidden sm:inline">Sign Out</span>
+                </Button>
+              </div>
+            </>
           )}
         </div>
       </div>
     </header>
   );
 };
-
