@@ -12,6 +12,7 @@ import { InvoicesList } from "./pages/invoices/InvoicesList";
 import { InvoiceDetail } from "./pages/invoices/InvoiceDetail";
 import { EmployeesList } from "./pages/employees/EmployeesList";
 import { EmployeeDetail } from "./pages/employees/EmployeeDetail";
+import { NewEmployee } from "./pages/employees/NewEmployee";
 import { Settings } from "./pages/Settings";
 import { Auth } from "./pages/Auth";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
@@ -34,8 +35,10 @@ const App = () => (
                 <Route index element={<Dashboard />} />
                 <Route path="/invoices" element={<InvoicesList />} />
                 <Route path="/invoices/:id" element={<InvoiceDetail />} />
+                <Route path="/invoices/new" element={<InvoiceDetail />} />
                 <Route path="/employees" element={<EmployeesList />} />
                 <Route path="/employees/:id" element={<EmployeeDetail />} />
+                <Route path="/employees/new" element={<NewEmployee />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
