@@ -2,12 +2,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useMobileDetect } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { LogOut, Menu, X } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
 export const Header = () => {
-  const isMobile = useMobileDetect();
+  const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
   const { user, signOut } = useAuth();
 
@@ -50,3 +50,4 @@ export const Header = () => {
     </header>
   );
 };
+
