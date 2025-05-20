@@ -9,7 +9,178 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      employees: {
+        Row: {
+          address: string
+          bank_account_holder: string
+          bank_address: string
+          bank_iban: string
+          bank_name: string
+          bank_swift_bic: string
+          cnic: string
+          created_at: string
+          email: string
+          id: string
+          name: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          address: string
+          bank_account_holder: string
+          bank_address: string
+          bank_iban: string
+          bank_name: string
+          bank_swift_bic: string
+          cnic: string
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          address?: string
+          bank_account_holder?: string
+          bank_address?: string
+          bank_iban?: string
+          bank_name?: string
+          bank_swift_bic?: string
+          cnic?: string
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      invoice_items: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          invoice_id: string
+          quantity: number
+          unit_price: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          invoice_id: string
+          quantity: number
+          unit_price: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          invoice_id?: string
+          quantity?: number
+          unit_price?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoice_items_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      invoices: {
+        Row: {
+          approved_by: string | null
+          created_at: string
+          currency: string
+          date: string
+          due_date: string
+          employee_id: string
+          id: string
+          invoice_number: string
+          notes: string | null
+          service_type: string | null
+          status: string
+          time_period: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          approved_by?: string | null
+          created_at?: string
+          currency: string
+          date: string
+          due_date: string
+          employee_id: string
+          id?: string
+          invoice_number: string
+          notes?: string | null
+          service_type?: string | null
+          status: string
+          time_period?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          approved_by?: string | null
+          created_at?: string
+          currency?: string
+          date?: string
+          due_date?: string
+          employee_id?: string
+          id?: string
+          invoice_number?: string
+          notes?: string | null
+          service_type?: string | null
+          status?: string
+          time_period?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoices_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          role: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          role?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          role?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
