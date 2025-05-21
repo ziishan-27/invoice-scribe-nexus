@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { Employee, Invoice } from "../types";
 import { supabase } from "@/integrations/supabase/client";
@@ -84,15 +83,23 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchEmployees = async () => {
     try {
+      console.log("Fetching employees...");
       const { data: employeesData, error } = await supabase
         .from('employees')
         .select('*');
 
       if (error) {
+        console.error("Error fetching employees:", error);
         throw error;
       }
 
+      console.log("Employees data from DB:", employeesData);
+      if (!employeesData || employeesData.length === 0) {
+        console.log("No employees found in database");
+      }
+
       const mappedEmployees = employeesData.map(mapEmployeeFromDB);
+      console.log("Mapped employees:", mappedEmployees);
       setEmployees(mappedEmployees);
     } catch (error: any) {
       console.error("Error fetching employees:", error.message);
@@ -129,14 +136,24 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const refreshData = async () => {
     setLoading(true);
-    await Promise.all([fetchEmployees(), fetchInvoices()]);
-    setLoading(false);
+    console.log("Refreshing data...");
+    try {
+      await Promise.all([fetchEmployees(), fetchInvoices()]);
+      console.log("Data refresh complete");
+    } catch (error) {
+      console.error("Error refreshing data:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
+    console.log("AppContext: Session state changed", { session });
     if (session) {
       refreshData();
     } else {
+      setEmployees([]);
+      setInvoices([]);
       setLoading(false);
     }
   }, [session]);
@@ -173,13 +190,19 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
       console.log("Response from database:", data);
       
+      if (!data) {
+        throw new Error("No data returned from database");
+      }
+
       const newEmployee = mapEmployeeFromDB(data);
-      setEmployees([...employees, newEmployee]);
+      setEmployees(prev => [...prev, newEmployee]);
 
       toast({
         title: "Employee Added",
         description: `${newEmployee.name} has been added successfully.`,
       });
+      
+      return Promise.resolve();
     } catch (error: any) {
       console.error("Error adding employee:", error);
       toast({
@@ -187,6 +210,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         description: `Failed to add employee: ${error.message}`,
         variant: "destructive",
       });
+      return Promise.reject(error);
     }
   };
 
@@ -421,6 +445,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const getEmployeeById = (id: string) => {
+    console.log("Getting employee by ID:", id, "from employees:", employees);
     return employees.find((employee) => employee.id === id);
   };
 
