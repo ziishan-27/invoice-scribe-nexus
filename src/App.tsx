@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -30,16 +29,23 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/auth" element={<Auth />} />
-              
-              <Route path="/" element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
+
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <AppLayout />
+                  </ProtectedRoute>
+                }
+              >
                 <Route index element={<Dashboard />} />
-                <Route path="/invoices" element={<InvoicesList />} />
-                <Route path="/invoices/:id" element={<InvoiceDetail />} />
-                <Route path="/invoices/new" element={<InvoiceDetail />} />
-                <Route path="/employees" element={<EmployeesList />} />
-                <Route path="/employees/:id" element={<EmployeeDetail />} />
-                <Route path="/employees/new" element={<NewEmployee />} />
-                <Route path="/settings" element={<Settings />} />
+                <Route path="invoices" element={<InvoicesList />} />
+                <Route path="invoices/new" element={<InvoiceDetail />} />
+                <Route path="invoices/:id" element={<InvoiceDetail />} />
+                <Route path="employees" element={<EmployeesList />} />
+                <Route path="employees/new" element={<NewEmployee />} />
+                <Route path="employees/:id" element={<EmployeeDetail />} />
+                <Route path="settings" element={<Settings />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>
