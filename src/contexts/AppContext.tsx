@@ -141,7 +141,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [session]);
 
-  const addEmployee = async (employee: Employee) => {
+  const addEmployee = async (employee: Omit<Employee, 'id'>) => {
     try {
       const newEmployeeData = {
         name: employee.name,
