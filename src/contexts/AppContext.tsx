@@ -63,7 +63,7 @@ interface AppContextType {
   employees: Employee[];
   invoices: Invoice[];
   loading: boolean;
-  addEmployee: (employee: Employee) => Promise<void>;
+  addEmployee: (employee: Omit<Employee, 'id'>) => Promise<void>;
   updateEmployee: (employee: Employee) => Promise<void>;
   deleteEmployee: (id: string) => Promise<void>;
   addInvoice: (invoice: Invoice) => Promise<void>;
@@ -143,6 +143,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const addEmployee = async (employee: Omit<Employee, 'id'>) => {
     try {
+      console.log("Adding employee to database:", employee);
+      
       const newEmployeeData = {
         name: employee.name,
         address: employee.address,
@@ -156,6 +158,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         user_id: user?.id
       };
 
+      console.log("Formatted employee data:", newEmployeeData);
+
       const { data, error } = await supabase
         .from('employees')
         .insert(newEmployeeData)
@@ -163,9 +167,12 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         .single();
 
       if (error) {
+        console.error("Supabase error:", error);
         throw error;
       }
 
+      console.log("Response from database:", data);
+      
       const newEmployee = mapEmployeeFromDB(data);
       setEmployees([...employees, newEmployee]);
 
