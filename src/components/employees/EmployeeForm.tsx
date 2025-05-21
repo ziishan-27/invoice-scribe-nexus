@@ -67,7 +67,22 @@ const EmployeeForm = ({ initialData, isEditing = false }: EmployeeFormProps) => 
     setIsSubmitting(true);
     try {
       if (isEditing && initialData) {
-        await updateEmployee({ ...data, id: initialData.id });
+        // Fix: Ensure all required properties from Employee interface are included
+        const updatedEmployee: Employee = {
+          id: initialData.id,
+          name: data.name,
+          email: data.email,
+          address: data.address,
+          cnic: data.cnic,
+          bankDetails: {
+            accountHolder: data.bankDetails.accountHolder,
+            swiftBic: data.bankDetails.swiftBic,
+            iban: data.bankDetails.iban,
+            bankName: data.bankDetails.bankName,
+            bankAddress: data.bankDetails.bankAddress,
+          }
+        };
+        await updateEmployee(updatedEmployee);
         toast({
           title: "Employee Updated",
           description: "Employee information has been updated successfully.",
