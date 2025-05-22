@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,6 +10,7 @@ import { AppLayout } from "./components/layout/AppLayout";
 import { Dashboard } from "./pages/Dashboard";
 import { InvoicesList } from "./pages/invoices/InvoicesList";
 import { InvoiceDetail } from "./pages/invoices/InvoiceDetail";
+import { NewInvoice } from "./pages/invoices/NewInvoice";
 import { EmployeesList } from "./pages/employees/EmployeesList";
 import { EmployeeDetail } from "./pages/employees/EmployeeDetail";
 import { NewEmployee } from "./pages/employees/NewEmployee";
@@ -40,7 +42,7 @@ const App = () => (
               >
                 <Route index element={<Dashboard />} />
                 <Route path="invoices" element={<InvoicesList />} />
-                <Route path="invoices/new" element={<InvoiceDetail />} />
+                <Route path="invoices/new" element={<NewInvoice />} />
                 <Route path="invoices/:id" element={<InvoiceDetail />} />
                 <Route path="employees" element={<EmployeesList />} />
                 <Route path="employees/new" element={<NewEmployee />} />
