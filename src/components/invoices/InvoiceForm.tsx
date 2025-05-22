@@ -4,7 +4,7 @@ import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useAppContext } from "@/contexts/AppContext";
-import { Currency, Invoice, InvoiceStatus } from "@/types";
+import { Currency, Invoice, InvoiceStatus, InvoiceItem } from "@/types";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
@@ -130,7 +130,7 @@ export const InvoiceForm = ({
         employeeId: data.employeeId,
         status: data.status as InvoiceStatus,
         currency: data.currency as Currency,
-        items: data.items,
+        items: data.items as InvoiceItem[],
         notes: data.notes,
         approvedBy: data.approvedBy,
         serviceType: data.serviceType,
@@ -484,3 +484,4 @@ export const InvoiceForm = ({
     </Form>
   );
 };
+
